@@ -1,0 +1,98 @@
+:root {
+    --font-family: 'Montserrat', sans-serif;
+    --selection-text-color: #222529;
+    --scrollbar-width: 5px;
+    --scrollbar-height: 5px;
+    --primary: #54b358;
+}
+
+* {
+    font-family: var(--font-family);
+    scroll-behavior: smooth;
+    scrollbar-width: var(--scrollbar-width);
+    scrollbar-color: var(--primary) transparent;
+}
+
+body {
+    margin: 0
+}
+
+::-webkit-scrollbar {
+    width: var(--scrollbar-width);
+    height: var(--scrollbar-width);
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 8px;
+}
+
+::-moz-selection {
+    color: var(--selection-text-color);
+    background: var(--primary);
+}
+
+::selection {
+    color: var(--selection-text-color);
+    background: var(--primary);
+}
+
+@font-face {
+    font-family: MinecraftRegular;
+    src: url(../public/fonts/MinecraftRegular.otf);
+}
+
+@font-face {
+    font-family: MinecraftBold;
+    src: url(../public/fonts/MinecraftBold.otf);
+}
+
+@font-face {
+    font-family: MinecraftItalic;
+    src: url(../public/fonts/MinecraftItalic.otf);
+}
+
+@font-face {
+    font-family: MinecraftBoldItalic;
+    src: url(../public/fonts/MinecraftBoldItalic.otf);
+}
+
+
+.font-regular {
+    font-family: MinecraftRegular, serif;
+}
+
+.font-bold {
+    font-family: MinecraftBold, serif;
+}
+
+.font-italic {
+    font-family: MinecraftItalic, serif;
+}
+
+
+.font-bold-italic {
+    font-family: MinecraftBoldItalic, serif;
+}
+
+.w-full {
+    width: 100%;
+    max-width: 400px
+}
+
+.h-screen {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.preview-container {
+    min-height: 2.5rem;
+    width: 100%;
+}
+
+.overflow-scroll {
+    overflow: scroll;
+}
