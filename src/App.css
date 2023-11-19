@@ -78,7 +78,10 @@ body {
 
 .w-full {
     width: 100%;
-    max-width: 400px
+}
+
+.max-w-400px {
+    max-width: 400px;
 }
 
 .h-screen {
@@ -95,4 +98,13 @@ body {
 
 .overflow-scroll {
     overflow: scroll;
+}
+
+.footer {
+    color: rgba(180, 200, 181, 0.45);
+}
+
+.footer a, i {
+    text-decoration: none;
+    color: rgba(84, 179, 88, 0.45);
 }

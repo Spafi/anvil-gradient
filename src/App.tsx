@@ -11,6 +11,7 @@ import { InputTextarea } from "primereact/inputtextarea";
 import anvil from "../public/images/anvil.png";
 import ColoredText from "./ColoredText.tsx";
 import { Toast } from "primereact/toast";
+import Footer from "./Footer.tsx";
 
 export default function App() {
 
@@ -45,13 +46,16 @@ export default function App() {
     }
 
     useEffect( () => {
-        const anvilInput = generateAnvilText( input, startColor, endColor, isBold, isItalic )
+        let anvilInput = generateAnvilText( input, startColor, endColor, isBold, isItalic )
+        if ( ( isItalic || isBold ) && anvilInput.length > 50 ) {
+            anvilInput = anvilInput.substring( 0, 50 )
+        }
+
         setFormattedText( anvilInput )
     }, [ input, startColor, endColor, isBold, isItalic ] )
 
 
     function hexToRgb(hex: string) {
-        console.log( 'hex', hex )
         const r = parseInt( hex.slice( 0, 2 ), 16 );
         const g = parseInt( hex.slice( 2, 4 ), 16 );
         const b = parseInt( hex.slice( 4, 6 ), 16 );
@@ -90,8 +94,17 @@ export default function App() {
                 );
 
                 const endIndex = Math.min( i + charactersPerColor, input.length );
+
+                let formatCode = '';
+                if ( isBold ) {
+                    formatCode += '&l';
+                }
+                if ( isItalic ) {
+                    formatCode += '&o';
+                }
+
                 const textSegment = input.substring( i, endIndex );
-                result += "&" + currentColor + textSegment;
+                result += "&" + currentColor + formatCode + textSegment;
             }
 
             currentLength = result.length;
@@ -104,10 +117,15 @@ export default function App() {
     function copyToClipboard(text: string) {
         navigator.clipboard.writeText( text )
                  .then( () => {
+
+                     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                     // @ts-expect-error
                      toast.current!.show( { severity: 'success', summary: 'Success', detail: 'Text copied to clipboard!', life: 3000 } );
                  } )
                  .catch( err => {
                      console.error( 'Failed to copy text: ', err );
+                     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                     // @ts-expect-error
                      toast.current!.show( { severity: 'error', summary: 'Error', detail: 'Failed to copy text.', life: 3000 } );
                  } );
     }
@@ -119,17 +137,19 @@ export default function App() {
                     <div className={ 'flex flex-column align-items-center justify-content-center' }>
 
 
-                        <div className='flex align-items-center justify-content-between w-full mb-4'>
+                        <div className='flex align-items-center justify-content-between w-full mb-4 max-w-400px'>
                             <img src={ anvil } alt='Anvil' width='80px'/>
                             <p className='text-2xl font-regular'
                                style={ gradientStyle }>Anvil Gradient Generator</p>
                         </div>
-                        <div className={ 'flex flex-column gap-4 w-full' }>
+                        <div className={ 'flex flex-column gap-4 w-full max-w-400px' }>
                             <div className={ 'flex align-items-center justify-content-between gap-4' }>
                                 <div>
                                     <ColorPicker name={ 'startColor' }
                                                  format="hex"
                                                  value={ startColor }
+                                            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                            // @ts-expect-error
                                                  onChange={ (e) => setStartColor( e.value ) }/>
                                     <label className={ 'ml-2' } htmlFor="startColor">Start Color</label>
                                 </div>
@@ -137,6 +157,8 @@ export default function App() {
                                     <ColorPicker name={ 'endColor' }
                                                  format="hex"
                                                  value={ endColor }
+                                            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                            // @ts-expect-error
                                                  onChange={ (e) => setEndColor( e.target.value ) }/>
                                     <label className={ 'ml-2' } htmlFor="endColor">End Color</label>
                                 </div>
@@ -154,12 +176,16 @@ export default function App() {
                                 <div>
                                     <Checkbox checked={ isBold }
                                               name={ 'bold' }
+                                            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                            // @ts-expect-error
                                               onChange={ e => setIsBold( e.checked ) }/>
                                     <label className={ 'ml-2' } htmlFor="bold">Bold</label>
                                 </div>
                                 <div>
                                     <Checkbox checked={ isItalic }
                                               name={ 'italic' }
+                                            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                            // @ts-expect-error
                                               onChange={ e => setIsItalic( e.checked ) }/>
                                     <label className={ 'ml-2' } htmlFor="italic">Italic</label>
                                 </div>
@@ -170,10 +196,10 @@ export default function App() {
                                 <small className={ 'text-gray-500' }>dark & white background</small>
 
                                 <div className={ 'preview-container p-2 overflow-scroll' }>
-                                    <ColoredText text={ formattedText }/>
+                                    <ColoredText text={ formattedText } isBold={ isBold } isItalic={ isItalic }/>
                                 </div>
                                 <div className={ 'bg-white preview-container p-2 overflow-scroll' }>
-                                    <ColoredText text={ formattedText }/>
+                                    <ColoredText text={ formattedText } isBold={ isBold } isItalic={ isItalic }/>
                                 </div>
                             </div>
 
@@ -189,7 +215,9 @@ export default function App() {
                             </div>
                         </div>
                     </div>
+                    <Footer/>
                 </div>
+
             </PrimeReactProvider>
     )
 }
