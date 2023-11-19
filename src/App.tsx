@@ -12,6 +12,7 @@ import anvil from "../public/images/anvil.png";
 import ColoredText from "./ColoredText.tsx";
 import { Toast } from "primereact/toast";
 import Footer from "./Footer.tsx";
+import { Tooltip } from "primereact/tooltip";
 
 export default function App() {
 
@@ -120,14 +121,29 @@ export default function App() {
 
                      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                      // @ts-expect-error
-                     toast.current!.show( { severity: 'success', summary: 'Success', detail: 'Text copied to clipboard!', life: 3000 } );
+                     toast.current!.show( {
+                                              severity: 'success',
+                                              summary : 'Success',
+                                              detail  : 'Text copied to clipboard!',
+                                              life    : 3000
+                                          } );
                  } )
                  .catch( err => {
                      console.error( 'Failed to copy text: ', err );
                      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                      // @ts-expect-error
-                     toast.current!.show( { severity: 'error', summary: 'Error', detail: 'Failed to copy text.', life: 3000 } );
+                     toast.current!.show( {
+                                              severity: 'error',
+                                              summary : 'Error',
+                                              detail  : 'Failed to copy text.',
+                                              life    : 3000
+                                          } );
                  } );
+    }
+
+    function generateRandomColors() {
+        setStartColor( randomHex( 6 ) )
+        setEndColor( randomHex( 6 ) )
     }
 
 
@@ -152,6 +168,13 @@ export default function App() {
                                             // @ts-expect-error
                                                  onChange={ (e) => setStartColor( e.value ) }/>
                                     <label className={ 'ml-2' } htmlFor="startColor">Start Color</label>
+                                </div>
+                                <div>
+                                    <i className="bi bi-arrow-clockwise text-2xl cursor-pointer random text-white"
+                                       onClick={ () => generateRandomColors() }></i>
+                                    <Tooltip target=".random"
+                                             position='top'
+                                             content={ 'Random colors' }/>
                                 </div>
                                 <div>
                                     <ColorPicker name={ 'endColor' }
@@ -210,7 +233,11 @@ export default function App() {
                                                rows={ 3 }
                                                value={ formattedText }
                                                tooltip={ 'Click to Copy!' }
-                                               tooltipOptions={ { position: 'top', mouseTrack: true, mouseTrackTop: 20 } }
+                                               tooltipOptions={ {
+                                                   position     : 'top',
+                                                   mouseTrack   : true,
+                                                   mouseTrackTop: 20
+                                               } }
                                                className={ 'w-full mt-2 outline-none' }/>
                                 <Toast ref={ toast }/>
                             </div>
