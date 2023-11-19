@@ -207,6 +207,7 @@ export default function App() {
                                 <p className={ 'mb-0 pb-0' }>Text to put in anvil</p>
                                 <InputTextarea onClick={ () => copyToClipboard( formattedText ) }
                                                name={ 'formattedText' }
+                                               rows={ 3 }
                                                value={ formattedText }
                                                tooltip={ 'Click to Copy!' }
                                                tooltipOptions={ { position: 'top', mouseTrack: true, mouseTrackTop: 20 } }
