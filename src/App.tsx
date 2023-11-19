@@ -43,7 +43,7 @@ export default function App() {
 
     function setInputTrimmed(input: string) {
         const onlyLettersOrNumbers = input.replace( /[^a-zA-Z0-9 ]/g, '' );
-        const trimmedInput = onlyLettersOrNumbers.substring( 0, 42 )
+        const trimmedInput = onlyLettersOrNumbers.substring( 0, 12 )
         setInput( trimmedInput )
     }
 
@@ -189,12 +189,14 @@ export default function App() {
                             </div>
 
                             <div className={ 'flex flex-column' }>
-                                <label className={ 'mb-2' } htmlFor="input">Text to color</label>
+                                <label className={ 'mb-2' }
+                                       htmlFor="input">Text to color
+                                </label>
                                 <InputText value={ input }
                                            name={ 'input' }
                                            placeholder={ 'Enter text here' }
                                            onChange={ (e) => setInputTrimmed( e.target.value ) }/>
-                                <small className={ 'text-gray-500' }>Input can contain only letters or numbers</small>
+                                <small className={ 'text-gray-500 mt-1' }>Letters & Numbers only. Max 12 characters</small>
                             </div>
 
                             <div className={ 'flex flex-column gap-2' }>
