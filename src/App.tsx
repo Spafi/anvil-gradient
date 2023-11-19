@@ -27,7 +27,7 @@ export default function App() {
     const [ endColor, setEndColor ] = useState( randomHex( 6 ) )
     const [ isBold, setIsBold ] = useState( false )
     const [ isItalic, setIsItalic ] = useState( false )
-    const [ input, setInput ] = useState( '/warp spaf' )
+    const [ input, setInput ] = useState( 'warp spaf' )
     const [ formattedText, setFormattedText ] = useState( '' )
 
     const toast = useRef( null );
@@ -42,7 +42,8 @@ export default function App() {
     };
 
     function setInputTrimmed(input: string) {
-        const trimmedInput = input.substring( 0, 42 )
+        const onlyLettersOrNumbers = input.replace( /[^a-zA-Z0-9 ]/g, '' );
+        const trimmedInput = onlyLettersOrNumbers.substring( 0, 42 )
         setInput( trimmedInput )
     }
 
@@ -193,6 +194,7 @@ export default function App() {
                                            name={ 'input' }
                                            placeholder={ 'Enter text here' }
                                            onChange={ (e) => setInputTrimmed( e.target.value ) }/>
+                                <small className={ 'text-gray-500' }>Input can contain only letters or numbers</small>
                             </div>
 
                             <div className={ 'flex flex-column gap-2' }>
